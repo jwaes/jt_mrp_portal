@@ -33,13 +33,15 @@ class CustomerPortal(portal.CustomerPortal):
         return [
             ('location_src_id.location_id', '!=', parent_location.id),
             ('location_src_id','in', partner.commercial_partner_id.property_stock_subcontractor.ids),
+            ('state','not in',('cancel','done'))
         ]
 
     def _get_mrpproduction_searchbar_sortings(self):
         return {
             'date': {'label': _('Due Date'), 'production': 'date_planned_finished desc'},
             # 'name': {'label': _('Reference'), 'order': 'name'},
-            'state': {'label': _('State'), 'production': 'state'},
+            'product': {'label': _('Product'), 'production': 'product_id'},
+            # 'state': {'label': _('State'), 'production': 'state'},
         }
 
 
@@ -54,6 +56,7 @@ class CustomerPortal(portal.CustomerPortal):
             'production': production,
             'resize_to_48': resize_to_48,
             'report_type': 'html',
+            'commercial_partner': request.env.user.partner_id.commercial_partner_id,
         }
 
         history = 'my_productions_history'
@@ -71,7 +74,7 @@ class CustomerPortal(portal.CustomerPortal):
 
         searchbar_filters =  {
                 'all': {'label': _('All'), 'domain': [('components_availability_state', 'in', ['available', 'expected', 'late'])]},
-                'available': {'label': _('Available'), 'domain': [('components_availability_state', '=', 'available')]},
+                'available': {'label': _('Available'), 'domain': [('components_availability_state', 'in', ['available'])]},
                 'expected': {'label': _('Expected'), 'domain': [('components_availability_state', '=', 'cancel')]},
                 'late': {'label': _('Late'), 'domain': [('components_availability_state', '=', 'late')]},
             }        
@@ -135,5 +138,8 @@ class CustomerPortal(portal.CustomerPortal):
 
         history = request.session.get('my_productions_history', [])
         values.update(get_records_pager(history, production_id))     
+
+
+
 
         return request.render("jt_mrp_portal.portal_my_production", values)        

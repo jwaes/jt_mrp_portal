@@ -44,7 +44,7 @@
                         <th>Product</th>
                         <th class="text-right">Due Date</th>
                         <th class="text-right">Availability</th>
-                        <th class="text-right">Status</th>
+                        <!-- <th class="text-right">Status</th> -->
                     </tr>
                 </thead>
                 <t t-foreach="productions" t-as="production">
@@ -64,9 +64,9 @@
                         <td class="text-right">
                             <t t-call="jt_mrp_portal.production_availability" />
                         </td>
-                        <td class="text-right">
+                        <!-- <td class="text-right">
                             <t t-call="jt_mrp_portal.production_state_bubble" />
-                        </td>
+                        </td> -->
                     </tr>
                 </t>
             </t>
@@ -235,7 +235,11 @@
                         <tbody>
                             <tr t-foreach="production.move_raw_ids" t-as="move">
                                 <td>
-                                    <span t-field="move.product_id"/>
+                                    <span t-field="move.product_id.name"/>
+                                    <t t-call="jt_product_vendorcodes.inject_vendor_code">
+                                        <t t-set="jt_vendor_id" t-value="commercial_partner" />
+                                        <t t-set="jt_product_id" t-value="move.product_id"/>
+                                    </t>                                    
                                 </td>
                                 <td class="text-right">
                                     <span t-field="move.product_uom_qty"/>
@@ -294,14 +298,14 @@
     </template>
 
     <template id="production_availability" name="Production Availability">
-        <t t-if="production.state in ['confirmed', 'progress']">
+        <t t-if="production.state in ['confirmed', 'progress', 'done','cancel']">
             <span
-                t-if="production.reservation_state == 'assigned' or production.components_availability_state == 'available'"
+                t-if="(production.reservation_state == 'assigned') or (production.components_availability_state  == 'available') or (production.components_availability_state =='done')"
                 class="small badge badge-success">
                 <t t-out="production.components_availability" />
             </span>
             <span
-                t-if="production.reservation_state != 'assigned' and production.components_availability_state in ('expected')"
+                t-if="production.reservation_state != 'assigned' and production.components_availability_state == 'expected'"
                 class="small badge badge-warning">
                 <t t-out="production.components_availability" />
             </span>
