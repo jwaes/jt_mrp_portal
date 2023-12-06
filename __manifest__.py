@@ -17,7 +17,7 @@
     'version': '0.2',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','mrp','portal','jt_product_vendorcodes'],
+    'depends': ['base','mrp','portal','jt_product_vendorcodes','jt_stock_portal'],
 
     # always loaded
     'data': [
