@@ -73,10 +73,10 @@ class CustomerPortal(portal.CustomerPortal):
         searchbar_sortings = self._get_mrpproduction_searchbar_sortings()
 
         searchbar_filters =  {
-                'all': {'label': _('All'), 'domain': [('components_availability_state', 'in', ['available', 'expected', 'late'])]},
-                'available': {'label': _('Available'), 'domain': [('components_availability_state', 'in', ['available'])]},
-                'expected': {'label': _('Expected'), 'domain': [('components_availability_state', '=', 'cancel')]},
-                'late': {'label': _('Late'), 'domain': [('components_availability_state', '=', 'late')]},
+                'all': {'label': _('All'), 'domain': []},
+                # 'available': {'label': _('Available'), 'domain': [('components_availability_state', 'in', ['available'])]},
+                # 'expected': {'label': _('Expected'), 'domain': [('components_availability_state', '=', 'cancel')]},
+                # 'late': {'label': _('Late'), 'domain': [('components_availability_state', '=', 'late')]},
             }        
 
         # default sortby order
@@ -87,11 +87,17 @@ class CustomerPortal(portal.CustomerPortal):
         if date_begin and date_end:
             domain += [('create_date', '>', date_begin), ('create_date', '<=', date_end)]        
 
+        product_tmpl = kw.get('product_tmpl')
+
         if searchbar_filters:
             # default filter
             if not filterby:
                 filterby = 'all'
-            domain += searchbar_filters[filterby]['domain']  
+            elif filterby == 'product_tmpl' and product_tmpl:
+                searchbar_filters.update({
+                    filterby: {'label': 'Product template', 'domain': [('product_id.product_tmpl_id.id', '=', product_tmpl)]},
+                })
+            domain += searchbar_filters[filterby]['domain']
 
         # count for pager
         production_count = MrpProduction.sudo().search_count(domain)   
@@ -116,9 +122,9 @@ class CustomerPortal(portal.CustomerPortal):
             'pager': pager,
             'default_url': '/my/productions',
             'searchbar_sortings': searchbar_sortings,
+            'sortby': sortby,
             'searchbar_filters': OrderedDict(sorted(searchbar_filters.items())),
             'filterby': filterby,
-            'sortby': sortby,
         })
         return request.render("jt_mrp_portal.portal_my_productions", values)                                  
 
@@ -139,7 +145,7 @@ class CustomerPortal(portal.CustomerPortal):
         history = request.session.get('my_productions_history', [])
         values.update(get_records_pager(history, production_id))     
 
-
-
+        product_tmple_link = "/my/productions?filterby=product_tmpl&product_tmpl=" + str(production_id.product_id.product_tmpl_id.id)
+        values.update({'product_tmpl_link' : product_tmple_link})
 
         return request.render("jt_mrp_portal.portal_my_production", values)        
