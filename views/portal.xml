@@ -258,17 +258,21 @@
                                     <t t-if="move.state == 'assigned'">
                                         <span class="text-success" t-field="move.forecast_availability"/>
                                     </t>
+                                    <t t-elif="move.state == 'done'">
+                                        <span t-field="move.state" class="small badge text-success"/>
+                                    </t>                                         
                                     <t t-elif="move.state == 'partially_available'">
                                         <span class="text-warning" t-field="move.forecast_availability"/>
                                         <span t-field="move.state" class="small badge badge-warning"/>
                                     </t>                                    
                                     <t t-elif="move.forecast_expected_date">
                                         <div class="small badge badge-warning">Exp <span t-field="move.forecast_expected_date" t-options='{"widget": "date"}' /></div>
-                                    </t>
+                                    </t>                 
                                     <t t-else="">
-                                        <span t-field="move.state" class="small badge badge-danger"/>
+                                        <span t-field="move.state" class="small badge badge-danger"/>                                       
                                     </t>
                                     <a t-attf-href="/my/transfers?filterby=product_variant&amp;product_variant={{move.product_id.id}}"><i class="fa fa-truck"/></a>
+                                    
                                 </td>
                                 <td class="text-right">
                                     <span t-field="move.quantity_done"/>
