@@ -275,7 +275,7 @@
                                     
                                 </td>
                                 <td class="text-end">
-                                    <span t-field="move.quantity_done"/>
+                                    <span t-field="move.quantity"/>
                                 </td>                                                              
                             </tr>
                         </tbody>
