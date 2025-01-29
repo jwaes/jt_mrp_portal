@@ -21,9 +21,8 @@ class CustomerPortal(portal.CustomerPortal):
         MrpProduction = request.env['mrp.production']
 
         if 'production_count'  in counters:
-            values['production_count'] = MrpProduction.sudo().search_count(self._prepare_mrpproduction_domain(partner)) \
-                if MrpProduction.check_access_rights('read', raise_exception=False) else 0
-
+            MrpProduction.check_access('read')
+            values['production_count'] = MrpProduction.sudo().search_count(self._prepare_mrpproduction_domain(partner))
         return values  
 
     def _prepare_mrpproduction_domain(self, partner):
