@@ -4,11 +4,11 @@
     <template id="portal_my_home_menu_productions" name="Portal layout : production menu entries"
         inherit_id="portal.portal_breadcrumbs" priority="25">
         <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
-            <li t-if="page_name == 'productions' or production"
+            <li t-if="page_name == 'subcontracting' or production"
                 t-attf-class="breadcrumb-item #{'active ' if not production else ''}">
-                <a t-if="production" t-attf-href="/my/productions?{{ keep_query() }}">Production
-                    Orders</a>
-                <t t-else="">Production Orders</t>
+                <a t-if="production" t-attf-href="/my/subcontracting?{{ keep_query() }}">
+                    Subcontracting Orders</a>
+                <t t-else="">Subcontracting Orders</t>
             </li>
             <li t-if="production" class="breadcrumb-item active">
                 <t t-out="production.name" />
@@ -20,8 +20,8 @@
         inherit_id="portal.portal_my_home" priority="25">
         <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
             <t t-call="portal.portal_docs_entry">
-                <t t-set="title">Production Orders</t>
-                <t t-set="url" t-value="'/my/productions'" />
+                <t t-set="title">Subcontracting Orders</t>
+                <t t-set="url" t-value="'/my/subcontracting'" />
                 <t t-set="placeholder_count" t-value="'production_count'" />
             </t>
         </xpath>
@@ -32,7 +32,7 @@
             <t t-set="breadcrumbs_searchbar" t-value="True" />
 
             <t t-call="portal.portal_searchbar">
-                <t t-set="title">Productions</t>
+                <t t-set="title">Subcontracting</t>
             </t>
             <t t-if="not productions">
                 <p>There are currently no productions for your account.</p>
@@ -68,9 +68,6 @@
                         <td class="text-end">
                             <t t-call="jt_mrp_portal.production_availability" />
                         </td>
-                        <!-- <td class="text-end">
-                            <t t-call="jt_mrp_portal.production_state_bubble" />
-                        </td> -->
                     </tr>
                 </t>
             </t>
@@ -160,8 +157,6 @@
                     <br />
                     <strong>End Date:</strong>
                     <span t-field="production.date_finished" t-options='{"widget": "date"}' />
-                    <strong>Component Status:</strong>
-                    <span t-field="production.components_availability" invisible="state not in ['confirmed', 'progress']" decoration-success="reservation_state == 'assigned' or components_availability_state == 'available'" decoration-warning="reservation_state != 'assigned' and components_availability_state in ('expected', 'available')" decoration-danger="reservation_state != 'assigned' and components_availability_state in ('late', 'unavailable')"/>                                   
                 </div>
 
                 <div class="mb-3 col-6 text-end">

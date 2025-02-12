@@ -7,7 +7,7 @@ class MrpProduction(models.Model):
     def _compute_access_url(self):
         super(MrpProduction, self)._compute_access_url()
         for production in self:
-            production.access_url = '/my/productions/%s' % (production.id)    
+            production.access_url = '/my/subcontracting/%s' % (production.id)    
 
     def _get_report_base_filename(self):
         self.ensure_one()

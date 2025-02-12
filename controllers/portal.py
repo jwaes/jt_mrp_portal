@@ -147,4 +147,4 @@ class CustomerPortal(portal.CustomerPortal):
         product_tmple_link = "/my/subcontracting?filterby=product_tmpl&product_tmpl=" + str(production_id.product_id.product_tmpl_id.id)
         values.update({'product_tmpl_link' : product_tmple_link})
 
-        return request.render("jt_mrp_portal.portal_my_production", values)        
+        return request.render("jt_mrp_portal.portal_my_production", values)
