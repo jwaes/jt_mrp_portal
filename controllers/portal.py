@@ -37,7 +37,7 @@ class CustomerPortal(portal.CustomerPortal):
 
     def _get_mrpproduction_searchbar_sortings(self):
         return {
-            'date': {'label': _('Due Date'), 'production': 'date_planned_finished desc'},
+            'date': {'label': _('Due Date'), 'production': 'date_finished desc'},
             # 'name': {'label': _('Reference'), 'order': 'name'},
             'product': {'label': _('Product'), 'production': 'product_id'},
             # 'state': {'label': _('State'), 'production': 'state'},

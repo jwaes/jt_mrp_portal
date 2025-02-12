@@ -62,7 +62,7 @@
                             <span t-field="production.product_qty" />
                         </td>                        
                         <td class="text-end">
-                            <span t-field="production.date_planned_finished"
+                            <span t-field="production.date_finished"
                                 t-options='{"widget": "date"}' />
                         </td>
                         <td class="text-end">
@@ -155,11 +155,13 @@
         <div id="content" t-attf-class="#{'card-body' if report_type == 'html' else ''}">
             <div class="row mb-3" id="production_due_date">
                 <div class="col-6">
-                    <strong>Due Date:</strong>
-                    <span t-field="production.date_planned_finished" t-options='{"widget": "date"}' />
+                    <strong>Scheduled Date:</strong>
+                    <span t-field="production.date_start" t-options='{"widget": "date"}' />
                     <br />
-                    <strong>Done Date:</strong>
+                    <strong>End Date:</strong>
                     <span t-field="production.date_finished" t-options='{"widget": "date"}' />
+                    <strong>Component Status:</strong>
+                    <span t-field="production.components_availability" invisible="state not in ['confirmed', 'progress']" decoration-success="reservation_state == 'assigned' or components_availability_state == 'available'" decoration-warning="reservation_state != 'assigned' and components_availability_state in ('expected', 'available')" decoration-danger="reservation_state != 'assigned' and components_availability_state in ('late', 'unavailable')"/>                                   
                 </div>
 
                 <div class="mb-3 col-6 text-end">
