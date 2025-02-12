@@ -62,7 +62,7 @@ class CustomerPortal(portal.CustomerPortal):
         return self._get_page_view_values(production, access_token, values, history, False, **kwargs)   
 
     @http.route(['/my/subcontracting', '/my/subcontracting/page/<int:page>'], type='http', auth="user", website=True)
-    def portal_my_productions(self, page=1, date_begin=None, date_end=None, sortby=None, filterby=None, **kw):        
+    def portal_my_subcontracting(self, page=1, date_begin=None, date_end=None, sortby=None, filterby=None, **kw):        
         values = self._prepare_portal_layout_values()
         partner = request.env.user.partner_id
         MrpProduction = request.env['mrp.production'] 
@@ -129,7 +129,7 @@ class CustomerPortal(portal.CustomerPortal):
 
 
     @http.route(['/my/subcontracting/<int:production_id>'], type='http', auth="public", website=True)
-    def portal_production_page(self, production_id, report_type=None, access_token=None, message=False, download=False, **kw):        
+    def portal_subcontracting_page(self, production_id, report_type=None, access_token=None, message=False, download=False, **kw):        
         try:
             production_id = self._document_check_access('mrp.production', production_id, access_token=access_token)
         except (AccessError, MissingError):
