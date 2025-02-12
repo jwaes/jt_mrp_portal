@@ -21,7 +21,9 @@
         <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
             <t t-call="portal.portal_docs_entry">
                 <t t-set="title">Subcontracting Orders</t>
+                <t t-set="icon" t-value="'/mrp_subcontracting/static/src/img/manufacturing.svg'"/>
                 <t t-set="url" t-value="'/my/subcontracting'" />
+                <t t-set="text">Follow and comment your Subcontracting orders</t>
                 <t t-set="placeholder_count" t-value="'production_count'" />
             </t>
         </xpath>

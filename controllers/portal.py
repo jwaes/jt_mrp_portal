@@ -117,7 +117,7 @@ class CustomerPortal(portal.CustomerPortal):
         values.update({
             'date': date_begin,
             'productions': productions.sudo(),
-            'page_name': 'productions',
+            'page_name': 'subcontracting',
             'pager': pager,
             'default_url': '/my/subcontracting',
             'searchbar_sortings': searchbar_sortings,
