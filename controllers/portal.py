@@ -37,10 +37,10 @@ class CustomerPortal(portal.CustomerPortal):
 
     def _get_mrpproduction_searchbar_sortings(self):
         return {
-            'date': {'label': self.env._('Due Date'), 'production': 'date_planned_finished desc'},
-            # 'name': {'label': self.env._('Reference'), 'order': 'name'},
-            'product': {'label': self.env._('Product'), 'production': 'product_id'},
-            # 'state': {'label': self.env._('State'), 'production': 'state'},
+            'date': {'label': _('Due Date'), 'production': 'date_planned_finished desc'},
+            # 'name': {'label': _('Reference'), 'order': 'name'},
+            'product': {'label': _('Product'), 'production': 'product_id'},
+            # 'state': {'label': _('State'), 'production': 'state'},
         }
 
 
@@ -72,10 +72,10 @@ class CustomerPortal(portal.CustomerPortal):
         searchbar_sortings = self._get_mrpproduction_searchbar_sortings()
 
         searchbar_filters =  {
-                'all': {'label': self.env._('All'), 'domain': []},
-                # 'available': {'label': self.env._('Available'), 'domain': [('components_availability_state', 'in', ['available'])]},
-                # 'expected': {'label': self.env._('Expected'), 'domain': [('components_availability_state', '=', 'cancel')]},
-                # 'late': {'label': self.env._('Late'), 'domain': [('components_availability_state', '=', 'late')]},
+                'all': {'label': _('All'), 'domain': []},
+                # 'available': {'label': _('Available'), 'domain': [('components_availability_state', 'in', ['available'])]},
+                # 'expected': {'label': _('Expected'), 'domain': [('components_availability_state', '=', 'cancel')]},
+                # 'late': {'label': _('Late'), 'domain': [('components_availability_state', '=', 'late')]},
             }        
 
         # default sortby order
