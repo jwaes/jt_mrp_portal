@@ -61,7 +61,7 @@ class CustomerPortal(portal.CustomerPortal):
         history = 'my_productions_history'
         return self._get_page_view_values(production, access_token, values, history, False, **kwargs)   
 
-    @http.route(['/my/productions', '/my/productions/page/<int:page>'], type='http', auth="user", website=True)
+    @http.route(['/my/subcontracting', '/my/subcontracting/page/<int:page>'], type='http', auth="user", website=True)
     def portal_my_productions(self, page=1, date_begin=None, date_end=None, sortby=None, filterby=None, **kw):        
         values = self._prepare_portal_layout_values()
         partner = request.env.user.partner_id
@@ -103,7 +103,7 @@ class CustomerPortal(portal.CustomerPortal):
 
         # make pager
         pager = portal_pager(
-            url="/my/productions",
+            url="/my/subcontracting",
             url_args={'date_begin': date_begin, 'date_end': date_end, 'sortby': sortby, 'filterby': filterby},
             total=production_count,
             page=page,
@@ -119,7 +119,7 @@ class CustomerPortal(portal.CustomerPortal):
             'productions': productions.sudo(),
             'page_name': 'productions',
             'pager': pager,
-            'default_url': '/my/productions',
+            'default_url': '/my/subcontracting',
             'searchbar_sortings': searchbar_sortings,
             'sortby': sortby,
             'searchbar_filters': OrderedDict(sorted(searchbar_filters.items())),
@@ -128,7 +128,7 @@ class CustomerPortal(portal.CustomerPortal):
         return request.render("jt_mrp_portal.portal_my_productions", values)                                  
 
 
-    @http.route(['/my/productions/<int:production_id>'], type='http', auth="public", website=True)
+    @http.route(['/my/subcontracting/<int:production_id>'], type='http', auth="public", website=True)
     def portal_production_page(self, production_id, report_type=None, access_token=None, message=False, download=False, **kw):        
         try:
             production_id = self._document_check_access('mrp.production', production_id, access_token=access_token)
@@ -144,7 +144,7 @@ class CustomerPortal(portal.CustomerPortal):
         history = request.session.get('my_productions_history', [])
         values.update(get_records_pager(history, production_id))     
 
-        product_tmple_link = "/my/productions?filterby=product_tmpl&product_tmpl=" + str(production_id.product_id.product_tmpl_id.id)
+        product_tmple_link = "/my/subcontracting?filterby=product_tmpl&product_tmpl=" + str(production_id.product_id.product_tmpl_id.id)
         values.update({'product_tmpl_link' : product_tmple_link})
 
         return request.render("jt_mrp_portal.portal_my_production", values)        
